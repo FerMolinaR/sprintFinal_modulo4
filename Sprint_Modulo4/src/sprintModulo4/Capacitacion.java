@@ -9,7 +9,7 @@ public class Capacitacion {
 	private LocalTime horaCapacitacion;
 	private String lugarCapacitacion;
 	private int duracionCapacitacion;
-	private int AsistentesCapacitacion;
+	private int asistentesCapacitacion;
 	private Cliente clienteCapacitacion;
 	
 	public Capacitacion() {}
@@ -24,7 +24,7 @@ public class Capacitacion {
 		this.horaCapacitacion = horaCapacitacion;
 		this.lugarCapacitacion = lugarCapacitacion;
 		this.duracionCapacitacion = duracionCapacitacion;
-		AsistentesCapacitacion = asistentesCapacitacion;
+		this.asistentesCapacitacion = asistentesCapacitacion;
 		this.clienteCapacitacion = clienteCapacitacion;
 	}
 
