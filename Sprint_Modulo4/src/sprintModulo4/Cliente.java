@@ -1,6 +1,6 @@
 package sprintModulo4;
 
-public class Cliente extends Usuario{	
+public class Cliente extends Usuario {	
 	private String apellidos;
 	private String telefono;
 	private String afp;
@@ -9,11 +9,13 @@ public class Cliente extends Usuario{
 	private String comuna;
 	private int edad;
 	
-	public Cliente() {}
+	public Cliente() {
+		SolicitadorDatos solicitador = new SolicitadorDatos();
+		solicitador.solicitarDatosCliente(this);
+	}
 
 	public Cliente(String apellidos, String telefono, String afp, SistemaSalud sistemaSalud, String direccion,
-			String comuna, int edad) {
-		super();
+			String comuna, int edad) {		
 		this.apellidos = apellidos;
 		this.telefono = telefono;
 		this.afp = afp;
@@ -28,7 +30,9 @@ public class Cliente extends Usuario{
 	}
 
 	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.apellidos = validador.validarLongitudCampo(apellidos, 5, 30) ? apellidos : this.apellidos;
+		
 	}
 
 	public String getTelefono() {
@@ -36,7 +40,8 @@ public class Cliente extends Usuario{
 	}
 
 	public void setTelefono(String telefono) {
-		this.telefono = telefono;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.telefono = validador.validarLongitudCampo(telefono, 5, 30) ? telefono : this.telefono;
 	}
 
 	public String getAfp() {
@@ -44,7 +49,8 @@ public class Cliente extends Usuario{
 	}
 
 	public void setAfp(String afp) {
-		this.afp = afp;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.afp = (validador.validarLongitudCampo(afp, 4, 30)) ? afp : this.afp;
 	}
 
 	public SistemaSalud getSistemaSalud() {
@@ -60,7 +66,8 @@ public class Cliente extends Usuario{
 	}
 
 	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.direccion = validador.validarLongitudCampo(direccion, 0, 70) ? direccion : this.direccion;
 	}
 
 	public String getComuna() {
@@ -68,7 +75,8 @@ public class Cliente extends Usuario{
 	}
 
 	public void setComuna(String comuna) {
-		this.comuna = comuna;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.comuna = validador.validarLongitudCampo(comuna, 0, 50) ? comuna : this.comuna;
 	}
 
 	public int getEdad() {
@@ -76,7 +84,22 @@ public class Cliente extends Usuario{
 	}
 
 	public void setEdad(int edad) {
-		this.edad = edad;
+		this.edad = (edad >= 0 && edad < 150) ? edad : this.edad;
+	}
+	
+	
+	public String obtenerNombre() {
+		return "Nombre completo: " + getNombre() + this.apellidos;
+	}
+	
+	public SistemaSalud obtenerSistemaSalud() {
+		return this.sistemaSalud;
+	}
+	
+	@Override
+	public void analizarUsuario() {		
+		super.analizarUsuario();
+		System.out.println("Direccion: " + this.direccion + "\n" + "Comuna: " + this.comuna);
 	}
 
 	@Override

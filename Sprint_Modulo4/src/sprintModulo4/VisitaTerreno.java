@@ -5,7 +5,6 @@ import java.time.LocalTime;
 
 public class VisitaTerreno {
 	private int idVisita;
-	private String rutClienteVisita;
 	private LocalDate fechaVisita;
 	private LocalTime horaVisita;
 	private String lugarVisita;
@@ -14,11 +13,10 @@ public class VisitaTerreno {
 	
 	public VisitaTerreno() {}
 
-	public VisitaTerreno(int idVisita, String rutClienteVisita, LocalDate fechaVisita, LocalTime horaVisita,
+	public VisitaTerreno(int idVisita, LocalDate fechaVisita, LocalTime horaVisita,
 			String lugarVisita, String comentariosVisita, Cliente clienteVisita) {
 		super();
 		this.idVisita = idVisita;
-		this.rutClienteVisita = rutClienteVisita;
 		this.fechaVisita = fechaVisita;
 		this.horaVisita = horaVisita;
 		this.lugarVisita = lugarVisita;
@@ -31,16 +29,9 @@ public class VisitaTerreno {
 	}
 
 	public void setIdVisita(int idVisita) {
-		this.idVisita = idVisita;
+		this.idVisita = idVisita > 0 ? idVisita : this.idVisita;
 	}
 
-	public String getRutClienteVisita() {
-		return rutClienteVisita;
-	}
-
-	public void setRutClienteVisita(String rutClienteVisita) {
-		this.rutClienteVisita = rutClienteVisita;
-	}
 
 	public LocalDate getFechaVisita() {
 		return fechaVisita;
@@ -81,10 +72,20 @@ public class VisitaTerreno {
 	public void setClienteVisita(Cliente clienteVisita) {
 		this.clienteVisita = clienteVisita;
 	}
+	
+	public boolean validarLugar(String lugar) {
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		return validador.validarLongitudCampo(lugar, 10, 50);
+	}
+	
+	public boolean validarComentarios(String comentarios) {
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		return validador.validarLongitudCampo(comentarios, 0, 100);
+	}
 
 	@Override
 	public String toString() {
-		return "VisitaTerreno [idVisita=" + idVisita + ", rutClienteVisita=" + rutClienteVisita + ", fechaVisita="
+		return "VisitaTerreno [idVisita=" + idVisita + ", fechaVisita="
 				+ fechaVisita + ", horaVisita=" + horaVisita + ", lugarVisita=" + lugarVisita + ", comentariosVisita="
 				+ comentariosVisita + ", clienteVisita=" + clienteVisita + "]";
 	}

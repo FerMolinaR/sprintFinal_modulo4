@@ -6,7 +6,10 @@ public class Profesional extends Usuario{
 	private String titulo;
 	private LocalDate fechaIngreso;
 	
-	public Profesional() {}
+	public Profesional() {
+		SolicitadorDatos solicitador = new SolicitadorDatos();
+		solicitador.solicitarDatosProfesional(this);
+	}
 
 	public Profesional(String titulo, LocalDate fechaIngreso) {
 		super();
@@ -19,7 +22,8 @@ public class Profesional extends Usuario{
 	}
 
 	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.titulo = validador.validarLongitudCampo(titulo, 10, 50) ? titulo : this.titulo;
 	}
 
 	public LocalDate getFechaIngreso() {
@@ -28,6 +32,15 @@ public class Profesional extends Usuario{
 
 	public void setFechaIngreso(LocalDate fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
+	}
+		
+
+	@Override
+	public void analizarUsuario() {
+		super.analizarUsuario();
+		System.out.println("Titulo: " + this.titulo);
+		System.out.println("Fecha ingreso: " + FormateadorDatos.desplegarFechaFormateada(this.fechaIngreso));
+		
 	}
 
 	@Override

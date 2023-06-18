@@ -28,7 +28,7 @@ public class Revision {
 	}
 
 	public void setIdRevision(int idRevision) {
-		this.idRevision = idRevision;
+		this.idRevision = idRevision > 0 ? idRevision : this.idRevision;
 	}
 
 	public int getIdVisita() {
@@ -44,7 +44,8 @@ public class Revision {
 	}
 
 	public void setNombreRevision(String nombreRevision) {
-		this.nombreRevision = nombreRevision;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.nombreRevision = validador.validarLongitudCampo(nombreRevision, 10, 50) ? nombreRevision : this.nombreRevision;
 	}
 
 	public String getDetalleRevision() {
@@ -52,7 +53,8 @@ public class Revision {
 	}
 
 	public void setDetalleRevision(String detalleRevision) {
-		this.detalleRevision = detalleRevision;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.detalleRevision = validador.validarLongitudCampo(detalleRevision, 0, 100) ? detalleRevision : this.detalleRevision;
 	}
 
 	public EstadoRevision getEstadoRevision() {
@@ -70,6 +72,8 @@ public class Revision {
 	public void setVisitaTerreno(VisitaTerreno visitaTerreno) {
 		this.visitaTerreno = visitaTerreno;
 	}
+	
+
 
 	@Override
 	public String toString() {

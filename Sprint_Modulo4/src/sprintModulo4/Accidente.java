@@ -6,22 +6,22 @@ import java.util.ArrayList;
 
 public class Accidente {
 	private int idAccidente;
-	private ArrayList<String> rutClienteAccidente;
 	private LocalDate fechaAccidente;
 	private LocalTime horaAccidente;
 	private String lugarAccidente;
 	private String origenAccidente;
 	private String consecuenciasAccidente;
 	private ArrayList<Cliente> clienteAccidente;
-	
-	public Accidente() {}
 
-	public Accidente(int idAccidente, ArrayList<String> rutClienteAccidente, LocalDate fechaAccidente,
-			LocalTime horaAccidente, String lugarAccidente, String origenAccidente, String consecuenciasAccidente,
-			ArrayList<Cliente> clienteAccidente) {
-		super();
+	public Accidente() {
+		SolicitadorDatos solicitador = new SolicitadorDatos();		
+		solicitador.solicitarDatosAccidente(this);
+	}
+
+	public Accidente(int idAccidente, LocalDate fechaAccidente, LocalTime horaAccidente, String lugarAccidente,
+			String origenAccidente, String consecuenciasAccidente, ArrayList<Cliente> clienteAccidente) {
+
 		this.idAccidente = idAccidente;
-		this.rutClienteAccidente = rutClienteAccidente;
 		this.fechaAccidente = fechaAccidente;
 		this.horaAccidente = horaAccidente;
 		this.lugarAccidente = lugarAccidente;
@@ -35,15 +35,7 @@ public class Accidente {
 	}
 
 	public void setIdAccidente(int idAccidente) {
-		this.idAccidente = idAccidente;
-	}
-
-	public ArrayList<String> getRutClienteAccidente() {
-		return rutClienteAccidente;
-	}
-
-	public void setRutClienteAccidente(ArrayList<String> rutClienteAccidente) {
-		this.rutClienteAccidente = rutClienteAccidente;
+		this.idAccidente = idAccidente > 0 ? idAccidente : this.idAccidente;
 	}
 
 	public LocalDate getFechaAccidente() {
@@ -67,7 +59,8 @@ public class Accidente {
 	}
 
 	public void setLugarAccidente(String lugarAccidente) {
-		this.lugarAccidente = lugarAccidente;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.lugarAccidente = (validador.validarLongitudCampo(lugarAccidente, 10, 50)) ? lugarAccidente : this.lugarAccidente;
 	}
 
 	public String getOrigenAccidente() {
@@ -75,7 +68,8 @@ public class Accidente {
 	}
 
 	public void setOrigenAccidente(String origenAccidente) {
-		this.origenAccidente = origenAccidente;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.origenAccidente = (validador.validarLongitudCampo(origenAccidente, 1, 100)) ? origenAccidente : this.origenAccidente;
 	}
 
 	public String getConsecuenciasAccidente() {
@@ -83,7 +77,8 @@ public class Accidente {
 	}
 
 	public void setConsecuenciasAccidente(String consecuenciasAccidente) {
-		this.consecuenciasAccidente = consecuenciasAccidente;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.consecuenciasAccidente = (validador.validarLongitudCampo(consecuenciasAccidente, 1, 100)) ? consecuenciasAccidente : this.consecuenciasAccidente;
 	}
 
 	public ArrayList<Cliente> getClienteAccidente() {
@@ -96,12 +91,9 @@ public class Accidente {
 
 	@Override
 	public String toString() {
-		return "Accidente [idAccidente=" + idAccidente + ", rutClienteAccidente=" + rutClienteAccidente
-				+ ", fechaAccidente=" + fechaAccidente + ", horaAccidente=" + horaAccidente + ", lugarAccidente="
-				+ lugarAccidente + ", origenAccidente=" + origenAccidente + ", consecuenciasAccidente="
-				+ consecuenciasAccidente + ", clienteAccidente=" + clienteAccidente + "]";
+		return "Accidente [idAccidente=" + idAccidente + ", fechaAccidente=" + fechaAccidente + ", horaAccidente="
+				+ horaAccidente + ", lugarAccidente=" + lugarAccidente + ", origenAccidente=" + origenAccidente
+				+ ", consecuenciasAccidente=" + consecuenciasAccidente + ", clienteAccidente=" + clienteAccidente + "]";
 	}
-	
-	
-	
+
 }

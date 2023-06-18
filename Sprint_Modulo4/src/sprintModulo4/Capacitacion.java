@@ -3,8 +3,7 @@ package sprintModulo4;
 import java.time.LocalTime;
 
 public class Capacitacion {
-	private int idCapacitacion;
-	private String rutClienteCapacitacion;
+	private int idCapacitacion;	
 	private DiaSemana diaCapacitacion;
 	private LocalTime horaCapacitacion;
 	private String lugarCapacitacion;
@@ -12,14 +11,17 @@ public class Capacitacion {
 	private int asistentesCapacitacion;
 	private Cliente clienteCapacitacion;
 	
-	public Capacitacion() {}
+	public Capacitacion() {
+		SolicitadorDatos solicitador = new SolicitadorDatos();		
+		solicitador.solicitarDatosCapacitacion(this);
+	}
 
-	public Capacitacion(int idCapacitacion, String rutClienteCapacitacion, DiaSemana diaCapacitacion,
+	public Capacitacion(int idCapacitacion, DiaSemana diaCapacitacion,
 			LocalTime horaCapacitacion, String lugarCapacitacion, int duracionCapacitacion, int asistentesCapacitacion,
 			Cliente clienteCapacitacion) {
 		super();
 		this.idCapacitacion = idCapacitacion;
-		this.rutClienteCapacitacion = rutClienteCapacitacion;
+		
 		this.diaCapacitacion = diaCapacitacion;
 		this.horaCapacitacion = horaCapacitacion;
 		this.lugarCapacitacion = lugarCapacitacion;
@@ -33,16 +35,9 @@ public class Capacitacion {
 	}
 
 	public void setIdCapacitacion(int idCapacitacion) {
-		this.idCapacitacion = idCapacitacion;
+		this.idCapacitacion = idCapacitacion > 0 ? idCapacitacion : this.idCapacitacion;
 	}
 
-	public String getRutClienteCapacitacion() {
-		return rutClienteCapacitacion;
-	}
-
-	public void setRutClienteCapacitacion(String rutClienteCapacitacion) {
-		this.rutClienteCapacitacion = rutClienteCapacitacion;
-	}
 
 	public DiaSemana getDiaCapacitacion() {
 		return diaCapacitacion;
@@ -65,7 +60,8 @@ public class Capacitacion {
 	}
 
 	public void setLugarCapacitacion(String lugarCapacitacion) {
-		this.lugarCapacitacion = lugarCapacitacion;
+		ValidadorCamposGenericos validador = new ValidadorCamposGenericos();
+		this.lugarCapacitacion = validador.validarLongitudCampo(lugarCapacitacion, 10, 50) ? lugarCapacitacion : this.lugarCapacitacion;
 	}
 
 	public int getDuracionCapacitacion() {
@@ -73,15 +69,15 @@ public class Capacitacion {
 	}
 
 	public void setDuracionCapacitacion(int duracionCapacitacion) {
-		this.duracionCapacitacion = duracionCapacitacion;
+		this.duracionCapacitacion = duracionCapacitacion > 0 ? duracionCapacitacion : this.duracionCapacitacion;
 	}
 
-	public int getAsistentesCapacitacion() {
-		return AsistentesCapacitacion;
+	public int getasistentesCapacitacion() {
+		return asistentesCapacitacion;
 	}
 
-	public void setAsistentesCapacitacion(int asistentesCapacitacion) {
-		AsistentesCapacitacion = asistentesCapacitacion;
+	public void setasistentesCapacitacion(int asistentesCapacitacion) {
+		this.asistentesCapacitacion = asistentesCapacitacion > 0 ? asistentesCapacitacion : this.asistentesCapacitacion;
 	}
 
 	public Cliente getClienteCapacitacion() {
@@ -91,13 +87,20 @@ public class Capacitacion {
 	public void setClienteCapacitacion(Cliente clienteCapacitacion) {
 		this.clienteCapacitacion = clienteCapacitacion;
 	}
+	
+	
+	
+	public String mostrarDetalle() {
+		return String.format("La capacitación será en %s a las %s del día %s, y durará %s minutos",
+				this.lugarCapacitacion, FormateadorDatos.desplegarHoraFormateada(horaCapacitacion),
+				this.diaCapacitacion, this.duracionCapacitacion);
+	}
 
 	@Override
 	public String toString() {
-		return "Capacitacion [idCapacitacion=" + idCapacitacion + ", rutClienteCapacitacion=" + rutClienteCapacitacion
-				+ ", diaCapacitacion=" + diaCapacitacion + ", horaCapacitacion=" + horaCapacitacion
+		return "Capacitacion [idCapacitacion=" + idCapacitacion + ", diaCapacitacion=" + diaCapacitacion + ", horaCapacitacion=" + horaCapacitacion
 				+ ", lugarCapacitacion=" + lugarCapacitacion + ", duracionCapacitacion=" + duracionCapacitacion
-				+ ", AsistentesCapacitacion=" + AsistentesCapacitacion + ", clienteCapacitacion=" + clienteCapacitacion
+				+ ", asistentesCapacitacion=" + asistentesCapacitacion + ", clienteCapacitacion=" + clienteCapacitacion
 				+ "]";
 	}
 	
